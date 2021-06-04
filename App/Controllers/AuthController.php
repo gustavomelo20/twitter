@@ -14,17 +14,29 @@ class AuthController  extends Action {
        $usuario = Container::getModel('Usuario');
 
        $usuario->_set('email', $_POST['email']);
-       $usuario->_set('senha',$_POST['senha']);
+       $usuario->_set('senha',md5($_POST['senha']));
      
-       $returno = $usuario->autenticar();
+       $usuario->autenticar();
 
        if($usuario->_get('id') != '' && $usuario->_get('nome')){
-           echo 'Autenticado';
+        
+        session_start();
+        $_SESSION['id'] = $usuario->_get('id');
+        $_SESSION['nome'] = $usuario->_get('nome');
+
+        header('Location: /timeline');
+
+       }else{
+          header('Location: /?login=erro');
        }
      
-       
+    }
 
+    public function sair(){
 
+        session_start();
+        session_destroy();
+        header('Location: /');   
     }
 
 }
