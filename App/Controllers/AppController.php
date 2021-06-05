@@ -10,34 +10,47 @@ use MF\Model\Container;
 class AppController  extends Action {
 
     public function timeline(){
-        session_start();
+     
+        $this->validaAutenticacao();
 
-
-        if($_SESSION['id'] != '' && $_SESSION['nome'] != ''){
-           $this->render('timeline');
-        }else{
-            header('Location: /?login=erro');
-        }
+        // recuperar tweets
+         $tweet = Container::getModel('Tweet');
+         $tweet->_set('id_usuario',$_SESSION['id']);
+         $tweets = $tweet->getAll();
+         $this->view->tweets = $tweets;
+         $this->render('timeline');
+       
        
     }
 
     public function tweet(){
 
+        $this->validaAutenticacao();
+
+        $tweet = Container::getModel('Tweet');
+        $tweet->_set('tweet', $_POST['tweet']);
+        $tweet->_set('id_usuario', $_SESSION['id']);
+        $tweet->salvar();
+        header('Location: /timeline');
+
+     
+       
+    }
+
+    public function validaAutenticacao(){
         session_start();
-
-
-        if($_SESSION['id'] != '' && $_SESSION['nome'] != ''){
-         
-                 $tweet = Container::getModel('Tweet');
-
-                 $tweet->_set('tweet', $_POST['tweet']);
-                 $tweet->_set('id_usuario', $_SESSION['id']);
-                 $tweet->salvar();
-
-        }else{
+        if(!isset($_SESSION['id']) ||$_SESSION['id'] == '' || !isset($_SESSION['nome']) ||$_SESSION['nome'] == ''){
             header('Location: /?login=erro');
         }
        
+    }
+
+    public function quemSeguir(){
+
+        $this->validaAutenticacao();
+
+       $this->render('quemSeguir');
+
     }
 
 }
