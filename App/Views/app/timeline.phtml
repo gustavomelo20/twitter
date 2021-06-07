@@ -68,13 +68,17 @@
 					</form>
 				</div>
 			</div>
+
+
+			
         <?php foreach($this->view->tweets as $id_tweet => $tweet) { ?>
-			<div class="row tweet">
+			<div class="row tweet mt-4" style="background: #d2d2d2">
 				<div class="col">
 					<p><strong><?= $tweet['nome'] ?></strong> <small><span class="text text-muted"><?= $tweet['data'] ?></span></small></p>
 					<p><?= $tweet['tweet'] ?></p>
 
 					<br />
+				
 				<?php if($_SESSION['id'] == $tweet['id_usuario']) { ?>
 					<form method="POST" action="/deletar_tweet">
 						<div class="col d-flex justify-content-end">
@@ -84,9 +88,13 @@
 					
 						</div>
 					</form>
+			
 				<?php } ?>
 				</div>
+				
 			</div>
+
+	
 	    <?php }?>
 
       </div>
