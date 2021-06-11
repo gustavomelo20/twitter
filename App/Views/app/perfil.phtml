@@ -4,7 +4,7 @@
 	  	<a class="menuItem" href="/timeline">
 	  		Home
 	  	</a>
-        
+
 	  	<a class="menuItem" href="/sair">
 	  		Sair
 	  	</a>
@@ -18,7 +18,7 @@
 		
 		<div class="col-md-3">
 
-		<div class="perfil">
+			<div class="perfil">
 				<div class="perfilTopo">
 
 				</div>
@@ -52,59 +52,66 @@
 
 				</div>
 			</div>
-        
+
 		</div>
 
 		<div class="col-md-6">
-			
 			<div class="row mb-2">
-				<div class="col">
-					<div class="card">
-						<div class="card-body">
-							<form method="get" action="/quem_seguir">
-								<div class="input-group mb-3">
-									<input name="pesquisarPor" type="text" class="form-control" placeholder="Quem você está procurando?">
-									<div class="input-group-append">
-										<button class="btn btn-primary" type="submit">Procurar</button>
-									</div>
-								</div>
-							</form>
+				<div class="col tweetBox">
+					<form action="/tweet" method="post">
+						<input type="hidden" name="perfil" value="1">
+						<textarea name="tweet" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+						
+						<div class="col mt-2 d-flex justify-content-end">
+							<button type="submit" class="btn btn-primary">Tweet</button>
 						</div>
-					</div>
+
+					</form>
 				</div>
 			</div>
-			<?php foreach($this->view->usuarios as $usuarios => $usuario) { ?>
-			<div class="row mb-2">
+
+
+		
+        <?php 
+        //echo '<pre>'; var_dump($this->view->tweets);
+        foreach($this->view->tweets as $id_tweet => $tweet) { ?>
+        	<?php if($_SESSION['id'] == $tweet['id_usuario']) { ?>	
+			<div class="row tweet mt-4" style="background: #d2d2d2">
 				<div class="col">
-					<div class="card">
-						<div class="card-body">
+					<p><strong><?= $tweet['nome'] ?></strong> <small><span class="text text-muted"><?= $tweet['data'] ?></span></small></p>
+					<p><?= $tweet['tweet'] ?></p>
+
+					<br />
+				
+				
+					<form method="POST" action="/deletar_tweet">
+						<div class="col d-flex justify-content-end">
+				
+						<input type="hidden" name="tweet" value="<?=$tweet['id'];?>">
+						<button type="submit" class="btn "><small><i class="fa fa-trash" aria-hidden="true"></i></small></button>	
 					
-
-							<div class="row">
-								<div class="col-md-6">
-								<?= $usuario['nome'] ?>
-								
-								</div>
-							
-								<div class="col-md-6 d-flex justify-content-end">
-									<div>
-									<?php if($usuario['seguindo_sn'] == 0) { ?>
-										<a href="/acao?acao=seguir&id_usuario=<?= $usuario['id'] ?>" class="btn btn-success">Seguir</a>
-										<?php }?>
-										<?php if($usuario['seguindo_sn'] == 1) { ?>
-										<a href="/acao?acao=deixar_de_seguir&id_usuario=<?= $usuario['id'] ?>" class="btn "><i class="fas fa-ban"></i>
-
-</a>
-										<?php }?>
-									</div>
-							
-								</div>
-							</div>
 						</div>
-					</div>
+					</form>
+			
+				
 				</div>
+				
 			</div>
-			<?php } ?>
+
+	
+	    <?php }?>
+
+	    <?php }?>
+
+      </div>
+
+		<div class="col-md-3">
+			<div class="quemSeguir">
+				<span class="quemSeguirTitulo">Quem seguir</span><br />
+				<hr />
+				<a href="/quem_seguir" class="quemSeguirTxt">Procurar por pessoas conhecidas</a>
+			</div>
 		</div>
+
 	</div>
 </div>

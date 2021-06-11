@@ -37,6 +37,13 @@ class Route extends Bootstrap {
 			'controller' => 'AppController',
 			'action' => 'timeline'
 		);
+
+		$routes['perfil'] = array(
+			'route' => '/perfil',
+			'controller' => 'AppController',
+			'action' => 'perfil'
+		);
+
 		$routes['sair'] = array(
 			'route' => '/sair',
 			'controller' => 'AuthController',

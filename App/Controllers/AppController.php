@@ -43,9 +43,40 @@ class AppController  extends Action {
         $tweet->_set('tweet', $_POST['tweet']);
         $tweet->_set('id_usuario', $_SESSION['id']);
         $tweet->salvar();
-        header('Location: /timeline');
+
+        if($_POST['perfil'] == 1){
+          header('Location: /perfil');  
+        }else{
+          header('Location: /timeline'); 
+        }
+       
 
      
+       
+    }
+
+
+    public function perfil(){
+
+    
+         $this->validaAutenticacao();
+
+        // recuperar tweets
+         $tweet = Container::getModel('Tweet');
+         $tweet->_set('id_usuario',$_SESSION['id']);
+         $tweets = $tweet->getAll();
+         $this->view->tweets = $tweets;
+
+         $usuario = Container::getModel('Usuario');
+         $usuario->_set('id',$_SESSION['id']);
+
+         $this->view->info_usuario = $usuario->getInfosUsuarios();
+         $this->view->total_tweets = $usuario->getTotalTweets();
+         $this->view->seguindo = $usuario->getTotalSeguindo();
+         $this->view->seguidores = $usuario-> getTotalSeguidores();
+
+         $this->render('perfil');
+
        
     }
 
