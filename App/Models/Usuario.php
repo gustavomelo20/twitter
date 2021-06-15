@@ -168,6 +168,28 @@ class Usuario extends Model{
       return $stmt->fetch(\PDO::FETCH_ASSOC);  
       
     }
+
+    public function ListaUsuariosSeguidores(){
+      $query = "select id_usuarios_seguindo from usuarios_seguidores where id = :id_usuario";
+      $stmt = $this->db->prepare($query);
+      $stmt->bindValue(':id_usuario', $this->_get('id'));
+      $stmt->execute();
+
+      return $stmt->fetch(\PDO::FETCH_ASSOC);  
+
+    }
+
+    public function getId(){
+      $query = "select id from usuarios where id = :id_usuario";
+      $stmt = $this->db->prepare($query);
+      $stmt->bindValue(':id_usuario', $this->_get('id'));
+      $stmt->execute();
+
+      return $stmt->fetch(\PDO::FETCH_ASSOC);  
+
+    }
+
+    
  
 
 }

@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
+	  <a class="menuItem" href="/perfil">
+	  		Perfil
+	  	</a>
 	  	<a class="menuItem" href="/timeline">
 	  		Home
 	  	</a>
@@ -27,7 +30,9 @@
 			<?php ?>
  					<div class="row mt-2 mb-2">
 						<div class="col mb-2">
+						<a href="/perfil?usuario=<?=$_SESSION['id']?>">
 							<span class="perfilPainelNome"><?php print_r($this->view->info_usuario['nome']) ?></span>
+						</a>
 						</div>
 					</div>
 
@@ -54,7 +59,7 @@
 			</div>
         
 		</div>
-
+        
 		<div class="col-md-6">
 			
 			<div class="row mb-2">
@@ -74,6 +79,7 @@
 				</div>
 			</div>
 			<?php foreach($this->view->usuarios as $usuarios => $usuario) { ?>
+		 <?php if($usuario['seguindo_sn'] == 0) { ?>
 			<div class="row mb-2">
 				<div class="col">
 					<div class="card">
@@ -87,16 +93,51 @@
 								</div>
 							
 								<div class="col-md-6 d-flex justify-content-end">
+								
 									<div>
 									<?php if($usuario['seguindo_sn'] == 0) { ?>
 										<a href="/acao?acao=seguir&id_usuario=<?= $usuario['id'] ?>" class="btn btn-success">Seguir</a>
+										
+										
+								
+										
+									</div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php }?>
 										<?php }?>
+			<?php } ?>
+			
+			<?php foreach($this->view->lista_seguidores as $usuarios => $usuario) { ?>
+				<?php if($usuario['seguindo_sn'] == 1) { ?>
+				<div class="row mb-2">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+					
+
+							<div class="row">
+								<div class="col-md-6">
+								<?= $usuario['nome'] ?>
+								
+								</div>
+							
+								<div class="col-md-6 d-flex justify-content-end">
+								
+									<div>
+			
 										<?php if($usuario['seguindo_sn'] == 1) { ?>
 										<a href="/acao?acao=deixar_de_seguir&id_usuario=<?= $usuario['id'] ?>" class="btn "><i class="fas fa-ban"></i>
 
-</a>
-										<?php }?>
+                                         </a>
+										
 									</div>
+									
 							
 								</div>
 							</div>
@@ -104,7 +145,10 @@
 					</div>
 				</div>
 			</div>
+			<?php }?>
+										<?php }?>
 			<?php } ?>
+
 		</div>
 	</div>
 </div>

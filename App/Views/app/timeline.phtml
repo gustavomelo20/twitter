@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
+	  	<a class="menuItem" href="/perfil">
+	  		Perfil
+			  
+	  	</a>
 	  	<a class="menuItem" href="/timeline">
 	  		Home
 	  	</a>
@@ -12,6 +16,7 @@
 	  </div>
 	</div>
 </nav>
+
 
 <div class="container mt-5">
 	<div class="row pt-2">
@@ -27,8 +32,10 @@
 			<?php ?>
  					<div class="row mt-2 mb-2">
 						<div class="col mb-2">
-							<a href="/perfil">
+							<a class="menuItem" href="/perfil?usuario=<?=$_SESSION['id']?>">
+							
 							<span class="perfilPainelNome"><?php print_r($this->view->info_usuario['nome']) ?></span>
+							
 							</a>
 						</div>
 					</div>
@@ -75,12 +82,14 @@
 
 			
         <?php foreach($this->view->tweets as $id_tweet => $tweet) { ?>
-			<div class="row tweet mt-4" style="background: #d2d2d2">
+			<div class="row tweet mt-4" style="background: #E8F5FD">
 				<div class="col">
-					<p><strong><?= $tweet['nome'] ?></strong> <small><span class="text text-muted"><?= $tweet['data'] ?></span></small></p>
+					<p><strong><a href="/perfil?usuario=<?=$tweet['id_usuario']?>"><?= $tweet['nome'] ?></a></strong> <small><span class="text text-muted"><?= $tweet['data'] ?></span></small></p>
 					<p><?= $tweet['tweet'] ?></p>
+					
 
 					<br />
+					
 				
 				<?php if($_SESSION['id'] == $tweet['id_usuario']) { ?>
 					<form method="POST" action="/deletar_tweet">
@@ -91,8 +100,18 @@
 					
 						</div>
 					</form>
+					<?php } ?>
+					<form action="/comentario" method="post">
+						<input type="hidden" name="tweet" value="<?=$tweet['id'];?>">
+						<textarea name="comentario" class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+						
+						<div class="col mt-2 d-flex justify-content-end">
+							<button type="submit" class="btn btn-primary">Comentar</button>
+						</div>
+
+					</form>
 			
-				<?php } ?>
+				
 				</div>
 				
 			</div>

@@ -1,5 +1,3 @@
-<?php print_r($_GET['usuario']) ?>
-
 <nav class="navbar navbar-expand-lg menu">
 	<div class="container">
 	  <div class="navbar-nav">
@@ -33,7 +31,7 @@
 		
  					<div class="row mt-2 mb-2">
 						<div class="col mb-2">
-							<a class="menuItem" href="/perfil?usuario=<?=$_SESSION['id']?>">
+							<a class="menuItem" href="/perfil">
 							<span class="perfilPainelNome"><?php print_r($this->view->info_usuario['nome']) ?></span>
 						    </a>
 						</div>
@@ -95,7 +93,7 @@
         //echo '<pre>'; var_dump($this->view->tweets);
         foreach($this->view->tweets as $id_tweet => $tweet) { ?>
 		   
-        	<?php $id = $_GET['usuario'] ;  if( $id == $tweet['id_usuario']) { ?>	
+        	<?php $id = $_SESSION['id'];  if( $id == $tweet['id_usuario']) { ?>	
 			<div class="row tweet mt-4" style="background: #E8F5FD">
 				<div class="col">
 					<p><strong><?= $tweet['nome'] ?></strong> <small><span class="text text-muted"><?= $tweet['data'] ?></span></small></p>
@@ -108,9 +106,8 @@
 						<div class="col d-flex justify-content-end">
 				
 						<input type="hidden" name="tweet" value="<?=$tweet['id'];?>">
-                        <?php  if( $_SESSION['id'] == $tweet['id_usuario']) { ?>	
 						<button type="submit" class="btn "><small><i class="fa fa-trash" aria-hidden="true"></i></small></button>	
-					    <?php }?>
+					
 						</div>
 					</form>
 			

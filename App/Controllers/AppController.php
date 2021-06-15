@@ -55,22 +55,39 @@ class AppController  extends Action {
        
     }
 
+    public function config(){
+         $this->validaAutenticacao();
+
+         
+         
+
+
+        $this->render('config');
+
+    }
+
 
     public function perfil(){
 
     
          $this->validaAutenticacao();
+         if(isset($_GET['usuario']) ==  ''){
+                
+            header('Location: /timeline');
+         }
 
         // recuperar tweets
          $tweet = Container::getModel('Tweet');
          $tweet->_set('id_usuario',$_SESSION['id']);
          $tweets = $tweet->getAll();
          $this->view->tweets = $tweets;
-
          $usuario = Container::getModel('Usuario');
          $usuario->_set('id',$_SESSION['id']);
 
          $this->view->info_usuario = $usuario->getInfosUsuarios();
+
+         
+       
          $this->view->total_tweets = $usuario->getTotalTweets();
          $this->view->seguindo = $usuario->getTotalSeguindo();
          $this->view->seguidores = $usuario-> getTotalSeguidores();
@@ -106,16 +123,16 @@ class AppController  extends Action {
  
 
         }
-        $usuario = Container::getModel('Usuario');
+         $usuario = Container::getModel('Usuario');
          $usuario->_set('id',$_SESSION['id']);
 
          $this->view->info_usuario = $usuario->getInfosUsuarios();
          $this->view->total_tweets = $usuario->getTotalTweets();
          $this->view->seguindo = $usuario->getTotalSeguindo();
          $this->view->seguidores = $usuario-> getTotalSeguidores();
-
-        $this->view->usuarios = $usuarios;
-       $this->render('quemSeguir');
+         $this->view->lista_seguidores = $usuario-> getAll();
+         $this->view->usuarios = $usuarios;
+         $this->render('quemSeguir');
 
     }
     public function acao(){
