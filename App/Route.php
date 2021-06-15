@@ -60,6 +60,12 @@ class Route extends Bootstrap {
 			'controller' => 'AppController',
 			'action' => 'tweet'
 		);
+		$routes['comentario'] = array(
+			'route' => '/comentario',
+			'controller' => 'AppController',
+			'action' => 'comentario'
+		);
+
 		$routes['quem_seguir'] = array(
 			'route' => '/quem_seguir',
 			'controller' => 'AppController',

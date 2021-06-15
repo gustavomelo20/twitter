@@ -66,11 +66,44 @@ class Tweet extends Model{
       $stmt = $this->db->prepare($query);
       $stmt->bindValue(':id',$this->_get('id'));
       $stmt->execute();
-       
+
+      
       return true;
   
     }
 
+    public function getComentario(){
+
+      $query = "select 
+                c.id, 
+                c.id_usuario , 
+                c.id_tweet,
+                u.nome,  
+                c.comentario 
+                from 
+                comentarios  as c
+                left join usuarios as u on (c.id_usuario = u.id)
+                ";
+      $stmt = $this->db->prepare($query);
+      $stmt->execute();
+
+      return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+      
+       
+    }
+
+    public function salvarComentario(){
+
+      $query = "insert into comentarios(id_usuario, id_tweet, comentario)values(:id_usuario, :id_tweet , :comentario)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bindValue(':id_usuario', $this->_get('id_usuario'));
+      $stmt->bindValue(':id_tweet', $this->_get('id_tweet'));
+      $stmt->bindValue(':comentario', $this->_get('comentario'));
+      $stmt->execute();
+    
+
+      return $this;
+  }
 
     
 

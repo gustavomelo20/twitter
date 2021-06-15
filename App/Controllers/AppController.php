@@ -19,6 +19,9 @@ class AppController  extends Action {
          $tweets = $tweet->getAll();
          $this->view->tweets = $tweets;
 
+         $comentarios = $tweet->getComentario();
+         $this->view->comentario = $comentarios;
+
          $usuario = Container::getModel('Usuario');
          $usuario->_set('id',$_SESSION['id']);
 
@@ -28,6 +31,11 @@ class AppController  extends Action {
          $this->view->seguidores = $usuario-> getTotalSeguidores();
 
          $this->render('timeline');
+
+         
+
+
+
        
        
     }
@@ -53,6 +61,22 @@ class AppController  extends Action {
 
      
        
+    }
+
+
+    public function comentario(){
+
+        $this->validaAutenticacao();
+
+        $tweet = Container::getModel('Tweet');
+        $tweet->_set('id_tweet', $_POST['tweet']);
+        $tweet->_set('comentario', $_POST['comentario']);
+        $tweet->_set('id_usuario', $_SESSION['id']);
+        $tweet->salvarComentario(); 
+        
+        header('Location: /timeline');
+
+
     }
 
     public function config(){

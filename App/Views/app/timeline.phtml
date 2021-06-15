@@ -78,8 +78,7 @@
 					</form>
 				</div>
 			</div>
-
-
+ 
 			
         <?php foreach($this->view->tweets as $id_tweet => $tweet) { ?>
 			<div class="row tweet mt-4" style="background: #E8F5FD">
@@ -89,6 +88,13 @@
 					
 
 					<br />
+					<?php foreach($this->view->comentario as $id  => $comentario) { ?>
+						<?php if($tweet['id'] == $comentario['id_tweet'] ) { ?>	  				   
+					<p><strong><?= $comentario['nome']?></strong><span> <i class="fa fa-comments" aria-hidden="true"></i>  <?= $comentario['comentario']?></span></p>
+					<?php } ?>
+					<?php } ?>
+					
+							
 					
 				
 				<?php if($_SESSION['id'] == $tweet['id_usuario']) { ?>
@@ -96,15 +102,15 @@
 						<div class="col d-flex justify-content-end">
 				
 						<input type="hidden" name="tweet" value="<?=$tweet['id'];?>">
-						<button type="submit" class="btn "><small><i class="fa fa-trash" aria-hidden="true"></i></small></button>	
+						<button type="submit" class="btn "><small><i class="fa fa-trash" aria-hidden="true"> Excluir Tweet</i></small></button>	
 					
 						</div>
-					</form>
+					</form>					
 					<?php } ?>
 					<form action="/comentario" method="post">
 						<input type="hidden" name="tweet" value="<?=$tweet['id'];?>">
 						<textarea name="comentario" class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-						
+
 						<div class="col mt-2 d-flex justify-content-end">
 							<button type="submit" class="btn btn-primary">Comentar</button>
 						</div>
